@@ -1,0 +1,64 @@
+import java.util.Scanner;
+public class WordGuessingGame
+{
+     private static final String[] WORDS = { "apple", "banana", "cherry", "grape", "orange"  };
+     private static final int MAX_ATTEMPTS = 6;
+     private String word;
+     private StringBuilder guessedWord;
+     private int attemptsLeft;
+     public void initializeGame() 
+    {
+         int randomIndex = (int) (Math.random() * WORDS.length);
+         word = WORDS[randomIndex];
+        
+         // Initialize guessedWord with underscores
+         guessedWord = new StringBuilder();
+         for (int i = 0; i < word.length(); i++) 
+         {
+          guessedWord.append("_");
+          }
+          attemptsLeft = MAX_ATTEMPTS;
+    }
+       public void playGame() 
+      {
+       Scanner scanner = new Scanner(System.in);
+       while (attemptsLeft > 0) 
+      {
+       System.out.println("Word: " + guessedWord);
+       System.out.println("Attempts Left: " + attemptsLeft);
+       System.out.print("Guess a letter: ");
+       char guess = scanner.next().charAt(0);
+       if (checkGuess(guess)) 
+      {
+          System.out.println("Correct guess!")
+      } else 
+     {
+        System.out.println("Incorrect guess!");
+        attemptsLeft--;
+     }
+        if (guessedWord.toString().equals(word)) 
+        {
+        System.out.println("Congratulations! You guessed the word correctly: " + word);
+        return;
+        }
+    }
+       System.out.println("Game over! You ran out of attempts. The word was: " + word);
+    }
+         private boolean checkGuess(char guess) {
+         boolean correctGuess = false;
+        for (int i = 0; i < word.length(); i++) 
+        {
+            if (word.charAt(i) == guess) 
+           {
+                guessedWord.setCharAt(i, guess);
+                correctGuess = true;
+            }
+        }
+         return correctGuess;
+    }
+       public static void main(String[] args) {
+        WordGuessingGame game = new WordGuessingGame();
+        game.initializeGame();
+        game.playGame();
+    }
+}
